@@ -9,7 +9,7 @@ int main() {
 	classA a;
 	a.print();
 
-	Math::Matrix2D m1;
+	Math::Matrix2D m1(3, 4);
 	m1.print();
 
     return 0;
