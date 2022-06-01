@@ -12,6 +12,11 @@ int main() {
 	Math::Matrix2D m1(3, 4);
 	m1.print();
 
-    return 0;
+	std::cout << m1.str() << std::endl;
+
+	Math::Matrix2D m2 = m1;
+	std::cout << m2.str() << std::endl;
+
+  return 0;
 }
 
