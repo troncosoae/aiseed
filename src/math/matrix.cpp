@@ -2,15 +2,12 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <assert.h>
+#include <tuple>
 
 
 namespace Math
 {
-
-void Matrix2D::print()
-{
-	std::cout << "mMatrix" << std::endl;
-}
 
 std::string Matrix2D::str()
 {
@@ -27,8 +24,31 @@ std::string Matrix2D::str()
 		}
 		ss << "}";
 	}
-	ss << "}\n";
+	ss << "}";
 
+	return ss.str();
+
+}
+
+Vect Matrix2D::operator*(const Vect& vect)
+{
+	//TODO: use math exceptions
+	//assert(std::get<0>(vect.shape()) == mHeight);
+	
+	return Vect();
+}
+
+
+std::string Vect::str()
+{
+	std::stringstream ss;
+	for (uint32_t i=0; i<mLength; i++)
+	{
+		if (i==0) ss << "{";
+		else ss << "\n ";
+		ss << mVector[i];
+	}
+	ss << "}";
 
 	return ss.str();
 
