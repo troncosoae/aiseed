@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <string>
-#include <stdint.h>
 #include <tuple>
+#include <cassert>
+#include <stdint.h>
+
 
 namespace Math
 {
@@ -25,13 +27,24 @@ public:
 		mLength = vect.mLength;
 		mVector = vect.mVector;
 	};
+	Vect(const std::vector<int> vect)
+	{
+		mLength = vect.size();
+		mVector = vect;
+	};
+	void operator=(const Vect& vect)
+	{
+		mLength = vect.mLength;
+		mVector = vect.mVector;
+	};
 
 	int& operator[](const int i)
 	{
 		return mVector[i];
 	};
+	int operator*(Vect& vect);
 
-	std::tuple<uint32_t> shape()
+	std::tuple<uint32_t> shape() const
 	{
 		return {mLength};
 	}
@@ -46,6 +59,8 @@ private:
 
 class Matrix2D
 {
+	using vectorSizeType = std::vector<int>::size_type;
+
 public:
 	Matrix2D() :
 		mWidth(10),
@@ -63,12 +78,25 @@ public:
 		mHeight = matrix.mHeight;
 		mMatrix = matrix.mMatrix;
 	};
+	Matrix2D(const std::vector<std::vector<int>> matrix) :
+		mWidth(matrix.size()),
+		mHeight(matrix[0].size()),
+		mMatrix(mWidth, Vect(mHeight))
+	{
+		vectorSizeType firstRowSize = matrix[0].size();
+		mMatrix[0] = matrix[0];
+		for (vectorSizeType i=1; i < matrix.size(); ++i)
+		{
+			assert(matrix[i].size() == mHeight);
+			mMatrix[i] = matrix[i];
+		}
+	};
 
-	Vect& operator[](const int i)
+	Vect operator[](const int i) const
 	{
 		return mMatrix[i];
 	};
-	Vect operator*(const Vect& vect);
+	Vect operator*(Vect& vect);
 	Matrix2D operator*(const Matrix2D& matrix);
 
 	std::tuple<uint32_t, uint32_t> shape()

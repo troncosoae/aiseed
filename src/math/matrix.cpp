@@ -30,12 +30,18 @@ std::string Matrix2D::str()
 
 }
 
-Vect Matrix2D::operator*(const Vect& vect)
+Vect Matrix2D::operator*(Vect& vect)
 {
 	//TODO: use math exceptions
-	//assert(std::get<0>(vect.shape()) == mHeight);
+	assert(std::get<0>(vect.shape()) == mHeight);
+	Vect output(mWidth);
+
+	for (uint32_t i=0; i<mWidth; ++i)
+	{
+		output[i] = mMatrix[i]*vect;
+	}
 	
-	return Vect();
+	return output;
 }
 
 
@@ -51,7 +57,21 @@ std::string Vect::str()
 	ss << "}";
 
 	return ss.str();
+}
 
+int Vect::operator*(Vect& vect)
+{
+	//TODO: use math exceptions
+	assert(std::get<0>(vect.shape()) == mLength);
+
+	int output;
+
+	for (uint32_t i=0; i<mLength; ++i)
+	{
+		output += mVector[i]*vect[i];
+	}
+	
+	return output;
 }
 
 
