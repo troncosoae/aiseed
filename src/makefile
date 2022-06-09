@@ -11,10 +11,10 @@ GXXFLAGS := -std=c++11 -Wall -Wextra -Wunreachable-code -Wswitch-default
 
 default: all
 
-$(OUTDIR)/lib_temp.o: | $(OUTDIR)
+$(OUTDIR)/lib_temp.o: 
 	$(GXX) $(GXXFLAGS) -c lib_temp/lib_temp.cpp -o $(OUTDIR)/lib_temp.o
 
-$(OUTDIR)/matrix.o: | $(OUTDIR)
+$(OUTDIR)/matrix.o: 
 	$(GXX) $(GXXFLAGS) -c math/matrix.cpp -o $(OUTDIR)/matrix.o
 
 all: $(DEPENDS) 
@@ -23,6 +23,11 @@ all: $(DEPENDS)
 $(OUTDIR):
 	@echo "creating folder $(OUTDIR)"
 	mkdir $(OUTDIR)
+
+debug: GXXFLAGS += -g -ggdb
+debug: OUTDIR = ../bin/debug
+debug: DEPENDS = $(OUTDIR)/lib_temp.o $(OUTDIR)/matrix.o
+debug: all
 
 run:
 	../bin/$(TARGET)
